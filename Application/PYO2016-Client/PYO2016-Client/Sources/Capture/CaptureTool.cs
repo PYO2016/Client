@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
+using System.Windows.Interop;
 
 namespace PYO2016_Client.Sources.Capture
 {
@@ -29,22 +30,48 @@ namespace PYO2016_Client.Sources.Capture
         public void capture(String path)
         {
             mainWindow = new Window();
-
-
-            //BitmapImage theImage = new BitmapImage
-            //    (new Uri(path+"\\sunoh.jpg", UriKind.Relative));
-            BitmapImage theImage = System.Windows.Forms.Clipboard.GetImage();
-
-            ImageBrush myImageBrush = new ImageBrush(theImage);
+            
+            Rectangle resolution = Screen.PrimaryScreen.Bounds;
+            
+            mainWindow.WindowState = WindowState.Maximized;
+            mainWindow.WindowStyle = WindowStyle.None;
+            mainWindow.BorderThickness = new Thickness(0);
 
             Canvas myCanvas = new Canvas();
-            myCanvas.Width = 300;
-            myCanvas.Height = 200;
-            myCanvas.Background = myImageBrush;
+            myCanvas.Width = resolution.Width;
+            myCanvas.Height = resolution.Height; 
+            myCanvas.Background = getImageBrush();
             
             mainWindow.Content = myCanvas;
-            mainWindow.Title = "Canvas Sample";
+            mainWindow.MouseDown += new System.Windows.Input.MouseButtonEventHandler(mouseDown);
             mainWindow.Show();
         }
+
+        private ImageBrush getImageBrush()
+        {
+            System.Drawing.Image img = System.Windows.Forms.Clipboard.GetImage();
+
+            Bitmap printscreen = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+            Graphics graphics = Graphics.FromImage(printscreen as System.Drawing.Image);
+
+            graphics.CopyFromScreen(0, 0, 0, 0, printscreen.Size);
+            
+
+            //var bitmap = new System.Drawing.Bitmap(img);
+            var bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(printscreen.GetHbitmap(),
+                                                                        IntPtr.Zero,
+                                                                        Int32Rect.Empty,
+                                                                        BitmapSizeOptions.FromEmptyOptions()
+            );
+            printscreen.Dispose();
+            var brush = new ImageBrush(bitmapSource);
+            return brush;
+        }
+
+        private void mouseDown(object sender, EventArgs e)
+        {
+            System.Windows.MessageBox.Show("Event Catch");
+        }
+
     }
 }
