@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PYO2016_Client.Sources.Capture;
 
 namespace PYO2016_Client.Pages
 {
@@ -28,6 +29,10 @@ namespace PYO2016_Client.Pages
         private void ListViewItem_Selected(object sender, RoutedEventArgs e)
         {
 
+        }
+        private void captureButton_Click_1(object sender, RoutedEventArgs e)
+        {
+            CaptureTool.getInstance().capture("C:\\Users\\KGWANGMIN\\Documents");
         }
     }
 }
