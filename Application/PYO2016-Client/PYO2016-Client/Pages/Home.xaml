@@ -7,12 +7,12 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid Style="{StaticResource ContentRoot}">
         <Button x:Name="button" Content="Login" HorizontalAlignment="Center" Margin="0,240,50,0" VerticalAlignment="Center" Width="75" />
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-400,50,0" Text="PYO 2016" FontFamily="a옛날목욕탕L 보통" FontSize="90"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-400,50,0" Text="PYO 2016" FontSize="90"/>
         <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,50,0">
             <TextBox x:Name="inputID" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="67,0,0,0"/>
             <TextBox x:Name="inputPW" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="67,43,0,0"/>
-            <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="ID" VerticalAlignment="Top" FontFamily="a옛날목욕탕L 보통" Margin="0,6,0,0"/>
-            <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" FontFamily="a옛날목욕탕L 보통" Margin="0,49,0,0"/>
+            <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="ID" VerticalAlignment="Top" Margin="0,6,0,0"/>
+            <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" Margin="0,49,0,0"/>
         </Grid>
     </Grid>
 </UserControl>

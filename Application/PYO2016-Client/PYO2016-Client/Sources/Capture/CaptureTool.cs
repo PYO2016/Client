@@ -43,20 +43,20 @@ namespace PYO2016_Client.Sources.Capture
             mainWindow = new Window();
             this.path = path;
             Rectangle resolution = Screen.PrimaryScreen.Bounds;
-            
+
             mainWindow.WindowState = WindowState.Maximized;
             mainWindow.WindowStyle = WindowStyle.None;
             mainWindow.BorderThickness = new Thickness(0);
 
             canvas = new Canvas();
             canvas.Width = resolution.Width;
-            canvas.Height = resolution.Height; 
+            canvas.Height = resolution.Height;
             canvas.Background = getImageBrush();
-            
+
             mainWindow.Content = canvas;
             mainWindow.MouseDown += new System.Windows.Input.MouseButtonEventHandler(mouseDown);
             mainWindow.MouseMove += new System.Windows.Input.MouseEventHandler(mouseMove);
-            mainWindow.MouseUp += new System.Windows.Input.MouseButtonEventHandler(mouseDown);
+            mainWindow.MouseUp += new System.Windows.Input.MouseButtonEventHandler(mouseUp);
             mainWindow.Show();
         }
 
@@ -66,7 +66,7 @@ namespace PYO2016_Client.Sources.Capture
             Graphics graphics = Graphics.FromImage(printscreen as System.Drawing.Image);
 
             graphics.CopyFromScreen(0, 0, 0, 0, printscreen.Size);
-            
+
 
             //var bitmap = new System.Drawing.Bitmap(img);
             bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(printscreen.GetHbitmap(),
@@ -82,7 +82,7 @@ namespace PYO2016_Client.Sources.Capture
         private void mouseDown(object sender, MouseButtonEventArgs e)
         {
             //System.Windows.MessageBox.Show("Event Catch");
-            if (isInClick == false) { 
+            if (isInClick == false) {
                 isInClick = true;
                 clickPoint = e.GetPosition(canvas);
                 rect = new System.Windows.Shapes.Rectangle();
@@ -98,7 +98,7 @@ namespace PYO2016_Client.Sources.Capture
         }
         private void mouseMove(object sender, EventArgs e)
         {
-            if(Mouse.LeftButton == MouseButtonState.Pressed)
+            if (Mouse.LeftButton == MouseButtonState.Pressed)
             {
                 System.Windows.Point p = Mouse.GetPosition(canvas);
                 rect.Width = Math.Abs(this.clickPoint.X - p.X);
@@ -116,25 +116,7 @@ namespace PYO2016_Client.Sources.Capture
             {
                 if (isInClick)
                 {
-                    System.Windows.Point p = Mouse.GetPosition(canvas);
-                    isInClick = false;
-                    canvas.Children.Remove(rect);
-                    mainWindow.Hide();
-                    double x, y;
-                    if (this.clickPoint.X - p.X > 0)
-                        x = this.clickPoint.X - Math.Abs(this.clickPoint.X - p.X);
-                    else
-                        x = this.clickPoint.X;
-                    if (this.clickPoint.Y - p.Y > 0)
-                        y = this.clickPoint.Y - Math.Abs(this.clickPoint.Y - p.Y);
-                    else
-                        y = this.clickPoint.Y;
-
-                    SaveBitmapSourceImageToFile(x, y
-                        , Math.Abs(this.clickPoint.X - p.X)
-                        , Math.Abs(this.clickPoint.Y - p.Y));
-
-                    mainWindow.Close();
+                    exitCapture();
                 }
             }
         }
@@ -154,9 +136,32 @@ namespace PYO2016_Client.Sources.Capture
 
         private void mouseUp(object sender, MouseButtonEventArgs e)
         {
-            //System.Windows.MessageBox.Show("Event Catch");
-            if (isInClick)
-                isInClick = false;
+            if (Mouse.LeftButton == MouseButtonState.Released)
+            {
+                exitCapture();
+            }
+        }
+
+        private void exitCapture()
+        {
+            System.Windows.Point p = Mouse.GetPosition(canvas);
+            isInClick = false;
+            canvas.Children.Remove(rect);
+            mainWindow.Hide();
+            double x, y;
+            if (this.clickPoint.X - p.X > 0)
+                x = this.clickPoint.X - Math.Abs(this.clickPoint.X - p.X);
+            else
+                x = this.clickPoint.X;
+            if (this.clickPoint.Y - p.Y > 0)
+                y = this.clickPoint.Y - Math.Abs(this.clickPoint.Y - p.Y);
+            else
+                y = this.clickPoint.Y;
+
+            SaveBitmapSourceImageToFile(x, y
+                , Math.Abs(this.clickPoint.X - p.X)
+                , Math.Abs(this.clickPoint.Y - p.Y));
+            mainWindow.Close();
         }
 
     }
