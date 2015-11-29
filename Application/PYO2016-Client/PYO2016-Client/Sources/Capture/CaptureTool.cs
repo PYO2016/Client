@@ -38,10 +38,19 @@ namespace PYO2016_Client.Sources.Capture
             return instance;
         }
 
+        private void makeDir()
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+        }
+
         public void capture(String path)
         {
             mainWindow = new Window();
             this.path = path;
+            this.makeDir();
             Rectangle resolution = Screen.PrimaryScreen.Bounds;
 
             mainWindow.WindowState = WindowState.Maximized;
