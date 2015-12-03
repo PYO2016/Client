@@ -14,20 +14,20 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height=".3*" />
+            <RowDefinition Height=".7*" />
         </Grid.RowDefinitions>
         <ScrollViewer>
             <StackPanel MinWidth="200"/>
         </ScrollViewer>
-        <TextBlock x:Name="textBlock" Grid.Column="1" Margin="0,0,0,0" Text="Files" VerticalAlignment="Top"  FontSize="30"/>
-        <Button x:Name="captureButton"  Content="Capture" HorizontalAlignment="Right" Height="32" Margin="0,0,0,0" VerticalAlignment="Top" Width="94" Grid.Column="1" Click="captureButton_Click_1"/>
-        <ListView x:Name="listView" Grid.Column="1" Grid.Row="0" Margin="0,43,0,151" >
-            <ListViewItem Content="ListViewItem"/>
-            <ListViewItem Content="ListViewItem"/>
-            <ListViewItem Content="ListViewItem"/>
-            <ListViewItem Content="ListViewItem"/>
-        </ListView>
-        <Button x:Name="button"  Content="Add" HorizontalAlignment="Center" Height="32" Margin="-140,133,0,0" VerticalAlignment="Top" Width="94" Grid.Column="1"/>
-        <Button x:Name="button1"  Content="Remove" HorizontalAlignment="Center" Height="32" Margin="80,133,0,0" VerticalAlignment="Top" Width="94" Grid.Column="1"/>
-        <Button x:Name="button2"  Content="Analysis" HorizontalAlignment="Center" Height="32" Margin="-20,203,0,0" VerticalAlignment="Top" Width="94" Grid.Column="1"/>
+        <Grid Grid.Column="1" Margin="0,0,0,176" Grid.Row="0"  Grid.RowSpan="2">
+            <TextBlock x:Name="textBlock" Margin="0,0,0,0" Text="Files" VerticalAlignment="Top"  FontSize="30"/>
+            <Button x:Name="captureButton"  Content="Capture" HorizontalAlignment="Right" Height="32" Margin="0,0,0,0" VerticalAlignment="Top" Width="94" Click="captureButton_Click_1"/>
+            <ListView x:Name="fileList" Grid.Row="0" Margin="0,0,0,0" Height="80"/>
+        </Grid>
+        <Grid Grid.Column="1" Grid.Row="1" Margin="0,100,0,0">
+            <Button x:Name="button"  Content="Add" HorizontalAlignment="Center" Height="32" Margin="0,0,110,0" VerticalAlignment="Top" Width="94" Click="fileAdd"/>
+            <Button x:Name="button1"  Content="Remove" HorizontalAlignment="Center" Height="32" Margin="110,0,0,0" VerticalAlignment="Top" Width="94"/>
+            <Button x:Name="button2"  Content="Analysis" HorizontalAlignment="Center" Height="32" Margin="60,70,50,0" VerticalAlignment="Top" Width="94"/>
+        </Grid>
     </Grid>
 </UserControl>
