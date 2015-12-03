@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="PYO2016_Client.Pages.JoinPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid Style="{StaticResource ContentRoot}">
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="72,210,122,20">
+            <Button x:Name="JoinBtn" Content="Join" HorizontalAlignment="Center" VerticalAlignment="Center" Width="75" Click="JoinBtn_Click"/>
+        </Grid>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-400,50,0" Text="PYO 2016" FontSize="90"/>
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,50,0">
+            <TextBox x:Name="idText" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="0,21,0,0"/>
+            <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="ID" VerticalAlignment="Top"/>
+            <TextBox x:Name="pwText" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="0,67,0,0"/>
+            <TextBlock x:Name="textBlock1_Copy" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" Margin="0,49,0,0"/>
+            <TextBox x:Name="confirmText" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="0,116,0,0"/>
+            <TextBlock x:Name="textBlock1_Copy1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Confirm Password" VerticalAlignment="Top" Margin="0,95,0,0"/>
+        </Grid>
+    </Grid>
+</UserControl>

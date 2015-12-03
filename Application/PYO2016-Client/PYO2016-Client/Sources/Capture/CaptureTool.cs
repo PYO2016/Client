@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Interop;
 using System.Windows.Input;
 using System.IO;
+using System.Threading;
 
 namespace PYO2016_Client.Sources.Capture
 {
@@ -20,17 +21,35 @@ namespace PYO2016_Client.Sources.Capture
         private static CaptureTool instance = null;
         // is clicking??
         private bool isInClick;
+        // click point struct
         private System.Windows.Point clickPoint;
+        // main Window
         private static Window mainWindow;
         private Canvas canvas;
         private String path;
         private BitmapSource bitmapSource;
-        System.Windows.Shapes.Rectangle rect;
+
+        public static AutoResetEvent captureResetEvent = new AutoResetEvent(false);
+
+        public System.Windows.Shapes.Rectangle rect;
+
+        public bool done;
+
+        public string getPath()
+        {
+            return path;
+        }
+        public void set()
+        {
+            done = true;
+        }
 
         private CaptureTool()
         {
             isInClick = false;
+            done = true;
         }
+
         public static CaptureTool getInstance()
         {
             if (instance == null)
@@ -46,27 +65,47 @@ namespace PYO2016_Client.Sources.Capture
             }
         }
 
-        public void capture(String path)
+        public bool capture(String path)
         {
-            mainWindow = new Window();
-            this.path = path;
-            this.makeDir();
-            Rectangle resolution = Screen.PrimaryScreen.Bounds;
+            try
+            {
+                Thread newWindowThread = new Thread(new ThreadStart(() =>
+                {
+                    // Create and show the Window
+                    mainWindow = new Window();
+                    this.path = path;
+                    this.makeDir();
+                    Rectangle resolution = Screen.PrimaryScreen.Bounds;
 
-            mainWindow.WindowState = WindowState.Maximized;
-            mainWindow.WindowStyle = WindowStyle.None;
-            mainWindow.BorderThickness = new Thickness(0);
+                    mainWindow.WindowState = WindowState.Maximized;
+                    mainWindow.WindowStyle = WindowStyle.None;
+                    mainWindow.BorderThickness = new Thickness(0);
 
-            canvas = new Canvas();
-            canvas.Width = resolution.Width;
-            canvas.Height = resolution.Height;
-            canvas.Background = getImageBrush();
+                    canvas = new Canvas();
+                    canvas.Width = resolution.Width;
+                    canvas.Height = resolution.Height;
+                    canvas.Background = getImageBrush();
 
-            mainWindow.Content = canvas;
-            mainWindow.MouseDown += new System.Windows.Input.MouseButtonEventHandler(mouseDown);
-            mainWindow.MouseMove += new System.Windows.Input.MouseEventHandler(mouseMove);
-            mainWindow.MouseUp += new System.Windows.Input.MouseButtonEventHandler(mouseUp);
-            mainWindow.Show();
+                    mainWindow.Content = canvas;
+                    mainWindow.MouseDown += new System.Windows.Input.MouseButtonEventHandler(mouseDown);
+                    mainWindow.MouseMove += new System.Windows.Input.MouseEventHandler(mouseMove);
+                    mainWindow.MouseUp += new System.Windows.Input.MouseButtonEventHandler(mouseUp);
+                    mainWindow.Show();
+                    // Start the Dispatcher Processing
+                    System.Windows.Threading.Dispatcher.Run();
+                }));
+
+                newWindowThread.SetApartmentState(ApartmentState.STA);
+                // Make the thread a background thread
+                newWindowThread.IsBackground = true;
+                // Start the thread
+                newWindowThread.Start();
+            }
+            catch(Exception)
+            {
+                
+            }
+            return true;
         }
 
         private ImageBrush getImageBrush()
@@ -171,7 +210,8 @@ namespace PYO2016_Client.Sources.Capture
                 , Math.Abs(this.clickPoint.X - p.X)
                 , Math.Abs(this.clickPoint.Y - p.Y));
             mainWindow.Close();
+            done = false;
+            captureResetEvent.Set();
         }
-
     }
 }

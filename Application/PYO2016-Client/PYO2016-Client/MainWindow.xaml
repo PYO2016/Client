@@ -10,6 +10,7 @@
         <mui:LinkGroup DisplayName="Welcome to PYO 2016">
             <mui:LinkGroup.Links>
                 <mui:Link DisplayName="Login Page" Source="/Pages/Home.xaml" />
+                <mui:Link DisplayName="Join" Source="/Pages/JoinPage.xaml" />
                 <mui:Link DisplayName="Upload Page" Source="/Pages/Upload.xaml" />
                 <mui:Link DisplayName="Result Page" Source="/Pages/Result.xaml" />
             </mui:LinkGroup.Links>
