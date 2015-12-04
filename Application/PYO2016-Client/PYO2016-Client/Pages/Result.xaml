@@ -19,5 +19,6 @@
                 <mui:Link DisplayName="2015-11-08 12:58:23 32%" />
             </mui:ModernTab.Links>
         </mui:ModernTab>
+        <Button Content="Update" HorizontalAlignment="Left" Margin="0,-31,0,0" VerticalAlignment="Top" Width="76"/>
     </Grid>
 </UserControl>

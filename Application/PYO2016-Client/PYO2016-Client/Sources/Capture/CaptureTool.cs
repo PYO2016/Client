@@ -13,6 +13,7 @@ using System.Windows.Interop;
 using System.Windows.Input;
 using System.IO;
 using System.Threading;
+using System.Runtime.InteropServices;
 
 namespace PYO2016_Client.Sources.Capture
 {
@@ -33,21 +34,15 @@ namespace PYO2016_Client.Sources.Capture
 
         public System.Windows.Shapes.Rectangle rect;
 
-        public bool done;
 
         public string getPath()
         {
             return path;
         }
-        public void set()
-        {
-            done = true;
-        }
 
         private CaptureTool()
         {
             isInClick = false;
-            done = true;
         }
 
         public static CaptureTool getInstance()
@@ -81,6 +76,7 @@ namespace PYO2016_Client.Sources.Capture
                     mainWindow.WindowStyle = WindowStyle.None;
                     mainWindow.BorderThickness = new Thickness(0);
 
+                    //Generate Canvas
                     canvas = new Canvas();
                     canvas.Width = resolution.Width;
                     canvas.Height = resolution.Height;
@@ -170,15 +166,21 @@ namespace PYO2016_Client.Sources.Capture
         }
         public void SaveBitmapSourceImageToFile(double x1, double y1, double x2, double y2)
         {
-            var image = this.bitmapSource;
-            var cI = new CroppedBitmap(image, new Int32Rect((int)x1, (int)y1, (int)x2, (int)y2));
+            try {
+                var image = this.bitmapSource;
+                var cI = new CroppedBitmap(image, new Int32Rect((int)x1, (int)y1, (int)x2, (int)y2));
 
-            this.path += "\\" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".png";
-            using (var fileStream = new FileStream(path, FileMode.Create))
+                this.path += "\\" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".png";
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    BitmapEncoder encoder = new PngBitmapEncoder();
+                    encoder.Frames.Add(BitmapFrame.Create(cI));
+                    encoder.Save(fileStream);
+                }
+            }
+            catch(Exception)
             {
-                BitmapEncoder encoder = new PngBitmapEncoder();
-                encoder.Frames.Add(BitmapFrame.Create(cI));
-                encoder.Save(fileStream);
+                return;
             }
         }
 
@@ -210,7 +212,6 @@ namespace PYO2016_Client.Sources.Capture
                 , Math.Abs(this.clickPoint.X - p.X)
                 , Math.Abs(this.clickPoint.Y - p.Y));
             mainWindow.Close();
-            done = false;
             captureResetEvent.Set();
         }
     }
