@@ -22,7 +22,7 @@ namespace PYO2016_Client.Pages
     /// </summary>
     public partial class BasicPage1 : System.Windows.Controls.UserControl
     {
-        private static System.Windows.Controls.ListView listView;
+        private System.Windows.Controls.ListView listView;
         public BasicPage1()
         {
             InitializeComponent();
@@ -52,8 +52,6 @@ namespace PYO2016_Client.Pages
             openImgFileDialog.Title = "Select a ImageFile";
             if (openImgFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                // Assign the cursor in the Stream to the Form's Cursor property.
-                //this.Cursor = new Cursor(openImgFileDialog.OpenFile());
                 for (int i = 0; i < listView.Items.Count; i++)
                 {
                     if (listView.Items[0].ToString() == openImgFileDialog.FileName)
@@ -63,9 +61,15 @@ namespace PYO2016_Client.Pages
             }
         }
 
-        public static void fileAddex(string filename)
+        private void fileAddex(string filename)
         {
             listView.Items.Add(filename);
+        }
+
+        private void fileRemove(object sender, RoutedEventArgs e)
+        {
+            if(listView.SelectedIndex != -1)
+                listView.Items.RemoveAt(listView.SelectedIndex);
         }
     }
 }
