@@ -73,5 +73,45 @@ namespace PYO2016_Client.Sources.HttpGetter
 
             return result;
         }
+
+        public static string HttpFileUpload(string url, string fileName, string contentType, int contentLength, Stream inputStream)
+        {
+            HttpWebRequest req = WebRequest.Create(new Uri(url))
+                                 as HttpWebRequest;
+            req.Method = "POST";
+            req.ContentType = "application/json";
+
+            StringBuilder paramz = new StringBuilder();
+            paramz.Append("{");
+            paramz.Append(@"""fileName"":""");
+            paramz.Append(fileName);
+            paramz.Append(@""",""contentType"":""");
+            paramz.Append(contentType);
+            paramz.Append(@""",""contentLength"":""");
+            paramz.Append(contentLength);
+            paramz.Append(@""",""inputStream"":""");
+            paramz.Append(inputStream);
+            paramz.Append(@"""}");
+
+            // Encode the parameters as form data:
+            byte[] formData = UTF8Encoding.UTF8.GetBytes(paramz.ToString());
+            req.ContentLength = formData.Length;
+
+            // Send the request:
+            using (Stream post = req.GetRequestStream())
+            {
+                post.Write(formData, 0, formData.Length);
+            }
+
+            // Pick up the response:
+            string result = null;
+            using (HttpWebResponse resp = req.GetResponse() as HttpWebResponse)
+            {
+                StreamReader reader = new StreamReader(resp.GetResponseStream());
+                result = reader.ReadToEnd();
+            }
+
+            return result;
+        }
     }
 }
