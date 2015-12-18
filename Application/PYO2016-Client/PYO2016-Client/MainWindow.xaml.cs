@@ -36,8 +36,8 @@ namespace PYO2016_Client
             InitializeComponent();
             this.components = new System.ComponentModel.Container();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            notifyIcon1.Icon = new Icon("PYO_LOGO.ico");
-            notifyIcon1.Visible = true;
+            ////notifyIcon1.Icon = new Icon("PYO_LOGO.ico");
+            ////notifyIcon1.Visible = true;
             //hooker = new KeyHooker();
             //hookThread = new Thread(hooker.SetHook);
             //hookThread.Start();

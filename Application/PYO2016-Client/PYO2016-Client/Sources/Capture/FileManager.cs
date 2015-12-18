@@ -9,8 +9,11 @@ namespace PYO2016_Client.Sources.Capture
     class FileManager
     {
         private static FileManager f = null;
+
         private FileManager() { }
+
         private LinkedList<string> filenames;
+
         public FileManager getInstance()
         {
             if (f == null)
@@ -30,10 +33,12 @@ namespace PYO2016_Client.Sources.Capture
             filenames.AddLast(s);
             return true;
         }
+
         public void clear()
         {
             filenames.Clear();
         }
+
         public LinkedList<string> getFilenames()
         {
             return filenames;

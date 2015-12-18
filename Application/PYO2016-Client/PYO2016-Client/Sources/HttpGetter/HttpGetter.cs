@@ -79,17 +79,18 @@ namespace PYO2016_Client.Sources.HttpGetter
             HttpWebRequest req = WebRequest.Create(new Uri(url))
                                  as HttpWebRequest;
             req.Method = "POST";
-            req.ContentType = "application/json";
+            req.ContentType = "multipart/form-data";
+            
 
             StringBuilder paramz = new StringBuilder();
             paramz.Append("{");
-            paramz.Append(@"""fileName"":""");
+            paramz.Append(@"""FileName"":""");
             paramz.Append(fileName);
-            paramz.Append(@""",""contentType"":""");
+            paramz.Append(@""",""ContentType"":""");
             paramz.Append(contentType);
-            paramz.Append(@""",""contentLength"":""");
+            paramz.Append(@""",""ContentLength"":");
             paramz.Append(contentLength);
-            paramz.Append(@""",""inputStream"":""");
+            paramz.Append(@",""InputStream"":""");
             paramz.Append(inputStream);
             paramz.Append(@"""}");
 

@@ -14,6 +14,12 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using PYO2016_Client.Sources.Capture;
 using System.Windows.Forms;
+using PYO2016_Client.Sources.HttpGetter;
+using System.IO;
+using System.Web;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace PYO2016_Client.Pages
 {
@@ -23,6 +29,7 @@ namespace PYO2016_Client.Pages
     public partial class BasicPage1 : System.Windows.Controls.UserControl
     {
         private System.Windows.Controls.ListView listView;
+
         public BasicPage1()
         {
             InitializeComponent();
@@ -33,6 +40,7 @@ namespace PYO2016_Client.Pages
         {
 
         }
+
         private void captureButton_Click_1(object sender, RoutedEventArgs e)
         {
             CaptureTool.getInstance().capture(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\pyo-capture");
@@ -70,6 +78,42 @@ namespace PYO2016_Client.Pages
         {
             if(listView.SelectedIndex != -1)
                 listView.Items.RemoveAt(listView.SelectedIndex);
+        }
+
+        private void analysisButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(listView.Items.Count > 0)
+            {
+                for (int i = 0; i < listView.Items.Count; i++)
+                {
+                    FileInfo fileInfo = new FileInfo(listView.Items[i].ToString());
+                    try
+                    {
+                        using (var client = new HttpClient())
+                        {
+                            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                            using (var content = new MultipartFormDataContent())
+                            {
+                                var fileContent = new ByteArrayContent(File.ReadAllBytes(listView.Items[i].ToString()));//(System.IO.File.ReadAllBytes(fileName));
+                                fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                                {
+                                    FileName = fileInfo.Name
+                                };
+                                content.Add(fileContent);
+                                var result = client.PostAsync("http://pyoserver.azurewebsites.net/api/Upload", content).Result;
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        //Log the exception
+                    }
+                }
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("Nothing is added");
+            }
         }
     }
 }
