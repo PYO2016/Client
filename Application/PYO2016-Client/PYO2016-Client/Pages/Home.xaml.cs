@@ -1,6 +1,11 @@
-﻿using System;
+﻿using FirstFloor.ModernUI.Windows.Controls;
+using PYO2016_Client.Sources.HttpGetter;
+using PYO2016_Client.Sources.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,17 +26,38 @@ namespace PYO2016_Client.Pages
     /// </summary>
     public partial class Home : System.Windows.Controls.UserControl
     {
+        private static string[] paramName = { "Email", "Password" };
+
         public Home()
         {
             InitializeComponent();
+            Attributes.pk = -1;
         }
 
-        private void LoginBtnClick(object sender, RoutedEventArgs e)
+        private async void LoginBtnClick(object sender, RoutedEventArgs e)
         {
+            string[] param = new string[2];
+            param[0] = ((System.Windows.Controls.TextBox)(FindName("idText"))).Text;
+            param[1] = ((System.Windows.Controls.PasswordBox)(FindName("pwText"))).Password;
 
-            System.Windows.Forms.MessageBox.Show("hihihi", "hell",
-                                 MessageBoxButtons.YesNo,
-                                 MessageBoxIcon.Question);
+            //string result = HttpGetter.HttpPost("http://pyoserver.azurewebsites.net/api/Account/Login", paramName, param);
+            string result = HttpGetter.HttpPost("http://localhost:25430/api/Account/Login", paramName, param);
+            if (result.Equals(""))
+            {
+                BBCodeBlock bs = new BBCodeBlock();
+                try
+                {
+                    bs.LinkNavigator.Navigate(new Uri("/Pages/Upload.xaml", UriKind.Relative), this);
+                }
+                catch (Exception error)
+                {
+                    ModernDialog.ShowMessage(error.Message, FirstFloor.ModernUI.Resources.NavigationFailed, MessageBoxButton.OK);
+                }
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show(result, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

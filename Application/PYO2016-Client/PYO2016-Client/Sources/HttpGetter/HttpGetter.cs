@@ -30,8 +30,7 @@ namespace PYO2016_Client.Sources.HttpGetter
         public static string HttpPost(string url, string[] paramName, string[] paramVal)
         {
 
-            HttpWebRequest req = WebRequest.Create(new Uri(url))
-                                 as HttpWebRequest;
+            HttpWebRequest req = WebRequest.Create(new Uri(url)) as HttpWebRequest;
             req.Method = "POST";
             req.ContentType = "application/json";
 
@@ -42,7 +41,7 @@ namespace PYO2016_Client.Sources.HttpGetter
                 paramz.Append(@"""");
                 paramz.Append(paramName[i]);
                 paramz.Append(@""":""");
-                paramz.Append(HttpUtility.UrlEncode(paramVal[i]));
+                paramz.Append(paramVal[i]);
                 if(i != paramName.Length - 1)
                     paramz.Append(@""",");
                 else
@@ -51,8 +50,7 @@ namespace PYO2016_Client.Sources.HttpGetter
             paramz.Append("}");
 
             // Encode the parameters as form data:
-            byte[] formData =
-                UTF8Encoding.UTF8.GetBytes(paramz.ToString());
+            byte[] formData = UTF8Encoding.UTF8.GetBytes(paramz.ToString());
             req.ContentLength = formData.Length;
 
             // Send the request:
@@ -63,8 +61,7 @@ namespace PYO2016_Client.Sources.HttpGetter
 
             // Pick up the response:
             string result = null;
-            using (HttpWebResponse resp = req.GetResponse()
-                                          as HttpWebResponse)
+            using (HttpWebResponse resp = req.GetResponse() as HttpWebResponse)
             {
                 StreamReader reader =
                     new StreamReader(resp.GetResponseStream());

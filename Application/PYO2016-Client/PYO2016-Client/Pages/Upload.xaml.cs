@@ -82,31 +82,32 @@ namespace PYO2016_Client.Pages
 
         private void analysisButton_Click(object sender, RoutedEventArgs e)
         {
-            if(listView.Items.Count > 0)
+            if (listView.Items.Count > 0)
             {
-                for (int i = 0; i < listView.Items.Count; i++)
+                using (var client = new HttpClient())
                 {
-                    FileInfo fileInfo = new FileInfo(listView.Items[i].ToString());
-                    try
+                    using (var content = new MultipartFormDataContent())
                     {
-                        using (var client = new HttpClient())
+                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                        for (int i = 0; i < listView.Items.Count; i++)
                         {
-                            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                            using (var content = new MultipartFormDataContent())
+                            FileInfo fileInfo = new FileInfo(listView.Items[i].ToString());
+                            try
                             {
                                 var fileContent = new ByteArrayContent(File.ReadAllBytes(listView.Items[i].ToString()));//(System.IO.File.ReadAllBytes(fileName));
                                 fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
                                 {
-                                    FileName = fileInfo.Name
+                                    FileName = fileInfo.Name.Substring(0, fileInfo.Name.IndexOf(fileInfo.Extension)) + DateTime.Now.ToString("__yyyyMMdd_HHmmss") + fileInfo.Extension
                                 };
                                 content.Add(fileContent);
-                                var result = client.PostAsync("http://pyoserver.azurewebsites.net/api/Upload", content).Result;
+                            }
+                            catch (Exception ex)
+                            {
+                                //Log the exception
                             }
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        //Log the exception
+                        
+                        var result = client.PostAsync("http://localhost:25430/api/Upload?pk=" + Convert.ToString(Attributes.pk), content).Result;
                     }
                 }
             }

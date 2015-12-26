@@ -1,4 +1,5 @@
-﻿using PYO2016_Client.Sources.HttpGetter;
+﻿using FirstFloor.ModernUI.Windows.Controls;
+using PYO2016_Client.Sources.HttpGetter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,16 +33,31 @@ namespace PYO2016_Client.Pages
         {
             string[] param = new string[3];
             param[0] = ((System.Windows.Controls.TextBox)(FindName("idText"))).Text;
-            param[1] = ((System.Windows.Controls.TextBox)(FindName("pwText"))).Text;
-            param[2] = ((System.Windows.Controls.TextBox)(FindName("confirmText"))).Text;
-            if(param[1] != param[2])
+            param[1] = ((System.Windows.Controls.PasswordBox)(FindName("pwText"))).Password;
+            param[2] = ((System.Windows.Controls.PasswordBox)(FindName("confirmText"))).Password;
+            if (param[1] != param[2])
             {
-                System.Windows.Forms.MessageBox.Show("hihihi", "hell",
-                                     MessageBoxButtons.YesNo,
-                                     MessageBoxIcon.Question);
+                System.Windows.Forms.MessageBox.Show("Confirmed Password does not match to the Password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            string result = HttpGetter.HttpPost("http://pyoserver.azurewebsites.net/api/Account/Register", paramName, param);
+            //string result = HttpGetter.HttpPost("http://pyoserver.azurewebsites.net/api/Account/Register", paramName, param);
+            string result = HttpGetter.HttpPost("http://localhost:25430/api/Account/Register", paramName, param);
+            if(result.Equals(""))
+            {
+                BBCodeBlock bs = new BBCodeBlock();
+                try
+                {
+                    bs.LinkNavigator.Navigate(new Uri("/Pages/Home.xaml", UriKind.Relative), this);
+                }
+                catch (Exception error)
+                {
+                    ModernDialog.ShowMessage(error.Message, FirstFloor.ModernUI.Resources.NavigationFailed, MessageBoxButton.OK);
+                }
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show(result, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
