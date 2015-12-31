@@ -27,14 +27,15 @@ namespace PYO2016_Client.Pages
     public partial class Home : System.Windows.Controls.UserControl
     {
         private static string[] paramName = { "Email", "Password" };
+        public string url = "";
 
         public Home()
         {
             InitializeComponent();
-            Attributes.pk = -1;
+            Attributes instance = Attributes.getInstance();
         }
 
-        private async void LoginBtnClick(object sender, RoutedEventArgs e)
+        private void LoginBtnClick(object sender, RoutedEventArgs e)
         {
             string[] param = new string[2];
             param[0] = ((System.Windows.Controls.TextBox)(FindName("idText"))).Text;
@@ -44,15 +45,19 @@ namespace PYO2016_Client.Pages
             string result = HttpGetter.HttpPost("http://localhost:25430/api/Account/Login", paramName, param);
             if (result.Equals(""))
             {
+                Attributes instance = Attributes.getInstance();
+                instance.addLinkGroup(1);
+
                 BBCodeBlock bs = new BBCodeBlock();
                 try
-                {
+                {    
                     bs.LinkNavigator.Navigate(new Uri("/Pages/Upload.xaml", UriKind.Relative), this);
                 }
                 catch (Exception error)
                 {
                     ModernDialog.ShowMessage(error.Message, FirstFloor.ModernUI.Resources.NavigationFailed, MessageBoxButton.OK);
                 }
+                instance.removeLinkGroup(0);
             }
             else
             {

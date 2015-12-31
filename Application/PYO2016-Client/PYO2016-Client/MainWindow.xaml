@@ -11,8 +11,13 @@
             <mui:LinkGroup.Links>
                 <mui:Link x:Name="Home" DisplayName="Login Page" Source="/Pages/Home.xaml" />
                 <mui:Link x:Name="Join" DisplayName="Join" Source="/Pages/JoinPage.xaml" />
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>    
+        <mui:LinkGroup DisplayName="PYO 2016">
+            <mui:LinkGroup.Links>
                 <mui:Link x:Name="Upload" DisplayName="Upload Page" Source="/Pages/Upload.xaml" />
                 <mui:Link x:Name="Result" DisplayName="Result Page" Source="/Pages/Result.xaml" />
+                <mui:Link x:Name="Logout" DisplayName="Logout" Source="/Pages/Logout.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
         <mui:LinkGroup DisplayName="settings" GroupKey="settings">

@@ -18,6 +18,7 @@ using System.Windows.Shapes;
 using System.Runtime.InteropServices;
 using PYO2016_Client.Sources.Capture;
 using System.Threading;
+using PYO2016_Client.Pages;
 
 namespace PYO2016_Client
 {

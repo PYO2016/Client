@@ -13,23 +13,18 @@ namespace PYO2016_Client.Sources.HttpGetter
     {
         public static string HttpGet(string url)
         {
-            HttpWebRequest req = WebRequest.Create(url)
-                                 as HttpWebRequest;
+            HttpWebRequest req = WebRequest.Create(url) as HttpWebRequest;
             string result = null;
-            using (HttpWebResponse resp = req.GetResponse()
-                                          as HttpWebResponse)
+            using (HttpWebResponse resp = req.GetResponse() as HttpWebResponse)
             {
-                StreamReader reader =
-                    new StreamReader(resp.GetResponseStream());
+                StreamReader reader = new StreamReader(resp.GetResponseStream());
                 result = reader.ReadToEnd();
             }
             return result;
         }
 
-
         public static string HttpPost(string url, string[] paramName, string[] paramVal)
         {
-
             HttpWebRequest req = WebRequest.Create(new Uri(url)) as HttpWebRequest;
             req.Method = "POST";
             req.ContentType = "application/json";

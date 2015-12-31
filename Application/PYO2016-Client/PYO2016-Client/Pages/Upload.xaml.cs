@@ -107,7 +107,7 @@ namespace PYO2016_Client.Pages
                             }
                         }
                         
-                        var result = client.PostAsync("http://localhost:25430/api/Upload?pk=" + Convert.ToString(Attributes.pk), content).Result;
+                        var result = client.PostAsync("http://localhost:25430/api/Upload?pk=" + Convert.ToString(Attributes.getInstance().getPk()), content).Result;
                     }
                 }
             }
