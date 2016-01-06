@@ -49,9 +49,15 @@ namespace PYO2016_Client.Sources.HttpGetter
             req.ContentLength = formData.Length;
 
             // Send the request:
-            using (Stream post = req.GetRequestStream())
+            try
             {
-                post.Write(formData, 0, formData.Length);
+                using (Stream post = req.GetRequestStream())
+                {
+                    post.Write(formData, 0, formData.Length);
+                }
+            } catch (System.Net.WebException e)
+            {
+                throw e;
             }
 
             // Pick up the response:

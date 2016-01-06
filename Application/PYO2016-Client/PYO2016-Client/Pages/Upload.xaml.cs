@@ -28,7 +28,8 @@ namespace PYO2016_Client.Pages
     /// </summary>
     public partial class BasicPage1 : System.Windows.Controls.UserControl
     {
-        private System.Windows.Controls.ListView listView;
+        static private System.Windows.Controls.ListView listView;
+        static private Object thisLock = new Object();
 
         public BasicPage1()
         {
@@ -41,16 +42,36 @@ namespace PYO2016_Client.Pages
 
         }
 
+        static public void static_captureButton_Click()
+        {
+            lock (thisLock)
+            {
+                CaptureTool.getInstance().capture(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\pyo-capture");
+                if (CaptureTool.getInstance().getPath() == null)
+                    return;
+                for (int i = 0; i < listView.Items.Count; i++)
+                {
+                    if (listView.Items[0].ToString() == CaptureTool.getInstance().getPath())
+                        return;
+                }
+                listView.Items.Add(CaptureTool.getInstance().getPath());
+            }
+        }
+
         private void captureButton_Click_1(object sender, RoutedEventArgs e)
         {
-            CaptureTool.getInstance().capture(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\pyo-capture");
-            CaptureTool.captureResetEvent.WaitOne();
-            for (int i = 0; i < listView.Items.Count; i++)
+            lock (thisLock)
             {
-                if (listView.Items[0].ToString() == CaptureTool.getInstance().getPath())
+                CaptureTool.getInstance().capture(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\pyo-capture");
+                if (CaptureTool.getInstance().getPath() == null)
                     return;
+                for (int i = 0; i < listView.Items.Count; i++)
+                {
+                    if (listView.Items[0].ToString() == CaptureTool.getInstance().getPath())
+                        return;
+                }
+                fileAddex(CaptureTool.getInstance().getPath());
             }
-            fileAddex(CaptureTool.getInstance().getPath());
         }
 
         private void fileAdd(object sender, RoutedEventArgs e)
@@ -76,8 +97,10 @@ namespace PYO2016_Client.Pages
 
         private void fileRemove(object sender, RoutedEventArgs e)
         {
-            if(listView.SelectedIndex != -1)
-                listView.Items.RemoveAt(listView.SelectedIndex);
+            for (int i = listView.SelectedItems.Count - 1; i >= 0; --i)
+            {
+                listView.Items.RemoveAt(i);
+            }
         }
 
         private void analysisButton_Click(object sender, RoutedEventArgs e)

@@ -61,7 +61,7 @@ namespace PYO2016_Client.Sources.Capture
                         printScreenKeyState = true;
                         if (shiftKeyState)
                         {
-                            CaptureTool.getInstance().capture(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\pyo-capture"); 
+                            PYO2016_Client.Pages.BasicPage1.static_captureButton_Click();
                             return (IntPtr)1;
                         }
                     }
@@ -73,7 +73,7 @@ namespace PYO2016_Client.Sources.Capture
                         shiftKeyState = true;
                         if (printScreenKeyState)
                         {
-                            CaptureTool.getInstance().capture(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\pyo-capture");
+                            PYO2016_Client.Pages.BasicPage1.static_captureButton_Click();
                             return (IntPtr)1;
                         }
                     }

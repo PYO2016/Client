@@ -113,6 +113,7 @@
     <Compile Include="Sources\Capture\CaptureTool.cs" />
     <Compile Include="Sources\Capture\FileManager.cs" />
     <Compile Include="Sources\Capture\KeyHooker.cs" />
+    <Compile Include="Sources\Encode\PyoEncoder.cs" />
     <Compile Include="Sources\HttpGetter\HttpGetter.cs" />
     <Compile Include="Sources\Model\RestfulModels.cs" />
     <Page Include="MainWindow.xaml">

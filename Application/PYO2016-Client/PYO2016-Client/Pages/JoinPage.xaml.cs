@@ -40,23 +40,30 @@ namespace PYO2016_Client.Pages
                 System.Windows.Forms.MessageBox.Show("Confirmed Password does not match to the Password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            //string result = HttpGetter.HttpPost("http://pyoserver.azurewebsites.net/api/Account/Register", paramName, param);
-            string result = HttpGetter.HttpPost("http://localhost:25430/api/Account/Register", paramName, param);
-            if(result.Equals(""))
+            try
             {
-                BBCodeBlock bs = new BBCodeBlock();
-                try
+                string result = HttpGetter.HttpPost("http://pyoserver.azurewebsites.net/api/Account/Register", paramName, param);
+                //string result = HttpGetter.HttpPost("http://localhost:25430/api/Account/Register", paramName, param);
+                if(result.Equals(""))
                 {
-                    bs.LinkNavigator.Navigate(new Uri("/Pages/Home.xaml", UriKind.Relative), this);
+                    BBCodeBlock bs = new BBCodeBlock();
+                    try
+                    {
+                        bs.LinkNavigator.Navigate(new Uri("/Pages/Home.xaml", UriKind.Relative), this);
+                    }
+                    catch (Exception error)
+                    {
+                        ModernDialog.ShowMessage(error.Message, FirstFloor.ModernUI.Resources.NavigationFailed, MessageBoxButton.OK);
+                    }
                 }
-                catch (Exception error)
+                else
                 {
-                    ModernDialog.ShowMessage(error.Message, FirstFloor.ModernUI.Resources.NavigationFailed, MessageBoxButton.OK);
+                    System.Windows.Forms.MessageBox.Show(result, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            else
+            catch (Exception error)
             {
-                System.Windows.Forms.MessageBox.Show(result, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ModernDialog.ShowMessage(error.Message, FirstFloor.ModernUI.Resources.NavigationFailed, MessageBoxButton.OK);
             }
         }
     }

@@ -75,6 +75,11 @@ namespace PYO2016_Client.Sources.Capture
                     mainWindow.WindowState = WindowState.Maximized;
                     mainWindow.WindowStyle = WindowStyle.None;
                     mainWindow.BorderThickness = new Thickness(0);
+                    mainWindow.SizeToContent = SizeToContent.WidthAndHeight;
+
+                    //mainWindow.SetValue() = new ScaleTransform()
+
+                    mainWindow.SetValue(Window.LayoutTransformProperty, null);
 
                     //Generate Canvas
                     canvas = new Canvas();
@@ -86,6 +91,9 @@ namespace PYO2016_Client.Sources.Capture
                     mainWindow.MouseDown += new System.Windows.Input.MouseButtonEventHandler(mouseDown);
                     mainWindow.MouseMove += new System.Windows.Input.MouseEventHandler(mouseMove);
                     mainWindow.MouseUp += new System.Windows.Input.MouseButtonEventHandler(mouseUp);
+
+                    // always on top
+                    // mainWindow.Topmost = true;
                     mainWindow.Show();
                     // Start the Dispatcher Processing
                     System.Windows.Threading.Dispatcher.Run();
@@ -96,6 +104,8 @@ namespace PYO2016_Client.Sources.Capture
                 newWindowThread.IsBackground = true;
                 // Start the thread
                 newWindowThread.Start();
+
+                CaptureTool.captureResetEvent.WaitOne();
             }
             catch(Exception)
             {
@@ -111,13 +121,13 @@ namespace PYO2016_Client.Sources.Capture
 
             graphics.CopyFromScreen(0, 0, 0, 0, printscreen.Size);
 
-
             //var bitmap = new System.Drawing.Bitmap(img);
             bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(printscreen.GetHbitmap(),
                                                                         IntPtr.Zero,
                                                                         Int32Rect.Empty,
                                                                         BitmapSizeOptions.FromEmptyOptions()
             );
+            printscreen.Save("C:\\git\\qwer.png");
             printscreen.Dispose();
             var brush = new ImageBrush(bitmapSource);
             return brush;
@@ -142,28 +152,36 @@ namespace PYO2016_Client.Sources.Capture
         }
         private void mouseMove(object sender, EventArgs e)
         {
-            if (Mouse.LeftButton == MouseButtonState.Pressed)
+            try
             {
-                System.Windows.Point p = Mouse.GetPosition(canvas);
-                rect.Width = Math.Abs(this.clickPoint.X - p.X);
-                rect.Height = Math.Abs(this.clickPoint.Y - p.Y);
-                if (this.clickPoint.X - p.X > 0)
-                    Canvas.SetLeft(rect, this.clickPoint.X - Math.Abs(this.clickPoint.X - p.X));
-                else
-                    Canvas.SetLeft(rect, this.clickPoint.X);
-                if (this.clickPoint.Y - p.Y > 0)
-                    Canvas.SetTop(rect, this.clickPoint.Y - Math.Abs(this.clickPoint.Y - p.Y));
-                else
-                    Canvas.SetTop(rect, this.clickPoint.Y);
-            }
-            else if (Mouse.LeftButton == MouseButtonState.Released)
-            {
-                if (isInClick)
+                if (Mouse.LeftButton == MouseButtonState.Pressed)
                 {
-                    exitCapture();
+                    System.Windows.Point p = Mouse.GetPosition(canvas);
+                    rect.Width = Math.Abs(this.clickPoint.X - p.X);
+                    rect.Height = Math.Abs(this.clickPoint.Y - p.Y);
+                    if (this.clickPoint.X - p.X > 0)
+                        Canvas.SetLeft(rect, this.clickPoint.X - Math.Abs(this.clickPoint.X - p.X));
+                    else
+                        Canvas.SetLeft(rect, this.clickPoint.X);
+                    if (this.clickPoint.Y - p.Y > 0)
+                        Canvas.SetTop(rect, this.clickPoint.Y - Math.Abs(this.clickPoint.Y - p.Y));
+                    else
+                        Canvas.SetTop(rect, this.clickPoint.Y);
+                }
+                else if (Mouse.LeftButton == MouseButtonState.Released)
+                {
+                    if (isInClick)
+                    {
+                        exitCapture();
+                    }
                 }
             }
+            catch (Exception)
+            {
+                return;
+            }
         }
+
         public void SaveBitmapSourceImageToFile(double x1, double y1, double x2, double y2)
         {
             try {
@@ -180,6 +198,7 @@ namespace PYO2016_Client.Sources.Capture
             }
             catch(Exception)
             {
+                path = null;
                 return;
             }
         }

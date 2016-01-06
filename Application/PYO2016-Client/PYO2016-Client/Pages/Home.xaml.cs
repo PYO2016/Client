@@ -41,27 +41,33 @@ namespace PYO2016_Client.Pages
             param[0] = ((System.Windows.Controls.TextBox)(FindName("idText"))).Text;
             param[1] = ((System.Windows.Controls.PasswordBox)(FindName("pwText"))).Password;
 
-            //string result = HttpGetter.HttpPost("http://pyoserver.azurewebsites.net/api/Account/Login", paramName, param);
-            string result = HttpGetter.HttpPost("http://localhost:25430/api/Account/Login", paramName, param);
-            if (result.Equals(""))
-            {
-                Attributes instance = Attributes.getInstance();
-                instance.addLinkGroup(1);
-
-                BBCodeBlock bs = new BBCodeBlock();
-                try
-                {    
-                    bs.LinkNavigator.Navigate(new Uri("/Pages/Upload.xaml", UriKind.Relative), this);
-                }
-                catch (Exception error)
+            try
+            {    
+                string result = HttpGetter.HttpPost("http://pyoserver.azurewebsites.net/api/Account/Login", paramName, param);
+                if (result.Equals(""))
                 {
-                    ModernDialog.ShowMessage(error.Message, FirstFloor.ModernUI.Resources.NavigationFailed, MessageBoxButton.OK);
+                    Attributes instance = Attributes.getInstance();
+                    instance.addLinkGroup(1);
+
+                    BBCodeBlock bs = new BBCodeBlock();
+                    try
+                    {    
+                        bs.LinkNavigator.Navigate(new Uri("/Pages/Upload.xaml", UriKind.Relative), this);
+                    }
+                    catch (Exception error)
+                    {
+                        ModernDialog.ShowMessage(error.Message, FirstFloor.ModernUI.Resources.NavigationFailed, MessageBoxButton.OK);
+                    }
+                    instance.removeLinkGroup(0);
                 }
-                instance.removeLinkGroup(0);
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show(result, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            else
+            catch (Exception error)
             {
-                System.Windows.Forms.MessageBox.Show(result, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ModernDialog.ShowMessage(error.Message, FirstFloor.ModernUI.Resources.NavigationFailed, MessageBoxButton.OK);
             }
         }
     }
