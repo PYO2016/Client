@@ -94,11 +94,11 @@
     <Compile Include="Pages\JoinPage.xaml.cs">
       <DependentUpon>JoinPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Upload.xaml.cs">
-      <DependentUpon>Upload.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\Result.xaml.cs">
       <DependentUpon>Result.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Upload.xaml.cs">
+      <DependentUpon>Upload.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -133,11 +133,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Upload.xaml">
+    <Page Include="Pages\Result.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Result.xaml">
+    <Page Include="Pages\Upload.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

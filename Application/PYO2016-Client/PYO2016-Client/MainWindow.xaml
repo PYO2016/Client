@@ -7,13 +7,13 @@
         ContentSource="/Pages/Home.xaml">
 
     <mui:ModernWindow.MenuLinkGroups>
-        <mui:LinkGroup DisplayName="Welcome to PYO 2016">
+        <mui:LinkGroup DisplayName=" ">
             <mui:LinkGroup.Links>
                 <mui:Link x:Name="Home" DisplayName="Login Page" Source="/Pages/Home.xaml" />
                 <mui:Link x:Name="Join" DisplayName="Join" Source="/Pages/JoinPage.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>    
-        <mui:LinkGroup DisplayName="PYO 2016">
+        <mui:LinkGroup DisplayName=" ">
             <mui:LinkGroup.Links>
                 <mui:Link x:Name="Upload" DisplayName="Upload Page" Source="/Pages/Upload.xaml" />
                 <mui:Link x:Name="Result" DisplayName="Result Page" Source="/Pages/Result.xaml" />

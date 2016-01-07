@@ -93,7 +93,7 @@ namespace PYO2016_Client.Sources.Capture
                     mainWindow.MouseUp += new System.Windows.Input.MouseButtonEventHandler(mouseUp);
 
                     // always on top
-                    // mainWindow.Topmost = true;
+                    mainWindow.Topmost = true;
                     mainWindow.Show();
                     // Start the Dispatcher Processing
                     System.Windows.Threading.Dispatcher.Run();

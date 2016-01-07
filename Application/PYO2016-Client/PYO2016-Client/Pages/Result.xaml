@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="PYO2016_Client.Pages.ListPage1"
+﻿<UserControl x:Class="PYO2016_Client.Pages.Result"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,18 +7,27 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid Style="{StaticResource ContentRoot}">
-        <!-- TODO: set @SelectedSource -->
-        <mui:ModernTab Layout="List">
-            <mui:ModernTab.Links>
-                <!-- TODO: set @Source -->
-                <mui:Link DisplayName="2015-11-08 12:55:23" />
-                <mui:Link DisplayName="2015-11-08 12:55:23" />
-                <mui:Link DisplayName="2015-11-08 12:55:24" />
-                <mui:Link DisplayName="2015-11-08 12:56:23 55%" />
-                <mui:Link DisplayName="2015-11-08 12:57:23 12%" />
-                <mui:Link DisplayName="2015-11-08 12:58:23 32%" />
-            </mui:ModernTab.Links>
-        </mui:ModernTab>
-        <Button Content="Update" HorizontalAlignment="Left" Margin="0,-31,0,0" VerticalAlignment="Top" Width="76"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width=".3*" />
+            <ColumnDefinition Width=".7*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".1*" />
+            <RowDefinition Height=".9*" />
+        </Grid.RowDefinitions>
+        <ScrollViewer>
+            <StackPanel MinWidth="200"/>
+        </ScrollViewer>
+        <Grid Grid.Column="0" Margin="0,0,0,176" Grid.Row="0"  RowSpan="2">
+            <Button x:Name="button" Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="button_Click"/>
+            <ListView x:Name="listBox" VerticalAlignment="Top" Grid.Row="0" Margin="0,32,0,0" Height="Auto">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_PreviewMouseLeftButtonDown" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+        </Grid>
+        <WebBrowser x:Name="browser" Grid.Column="1" HorizontalAlignment="Left" Height="Auto" Margin="0.2,0.4,0,0" Grid.Row="1" VerticalAlignment="Top" Width="Auto"/>
     </Grid>
 </UserControl>

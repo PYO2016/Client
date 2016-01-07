@@ -65,7 +65,6 @@ namespace PYO2016_Client.Pages
                 {
                     ModernDialog.ShowMessage(error.Message, FirstFloor.ModernUI.Resources.NavigationFailed, MessageBoxButton.OK);
                 }
-                instance.removeLinkGroup(0);
             }
             catch (Exception error)
             {

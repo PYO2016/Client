@@ -31,7 +31,7 @@ namespace PYO2016_Client.Pages
     public partial class BasicPage1 : System.Windows.Controls.UserControl
     {
         static private System.Windows.Controls.ListView listView;
-        static private Object thisLock = new Object();
+        static private object thisLock = new object();
 
         public BasicPage1()
         {

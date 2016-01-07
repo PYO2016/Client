@@ -12,36 +12,43 @@ namespace PYO2016_Client.Sources.Capture
 
         private FileManager() { }
 
-        private LinkedList<string> filenames;
+        private LinkedList<KeyValuePair<string, string>> k;
 
-        public FileManager getInstance()
+        static public FileManager getInstance()
         {
             if (f == null)
                 f = new FileManager();
             return f;
         }
 
-        public bool addFileName(string s)
+        public bool addValue(string date, string value)
         {
-            foreach(string t in filenames)
+            foreach(KeyValuePair<string, string> t in k)
             {
-                if(t == s)
+                if(t.Key == date)
                 {
                     return false;
                 }
             }
-            filenames.AddLast(s);
+            k.AddLast(new KeyValuePair<string, string>(date, value));
             return true;
+        }
+
+        public string getValue(string date)
+        {
+            foreach(KeyValuePair<string, string> t in k)
+            {
+                if(t.Key == date)
+                {
+                    return t.Value;
+                }
+            }
+            return null;
         }
 
         public void clear()
         {
-            filenames.Clear();
-        }
-
-        public LinkedList<string> getFilenames()
-        {
-            return filenames;
+            k.Clear();
         }
     }
 }
