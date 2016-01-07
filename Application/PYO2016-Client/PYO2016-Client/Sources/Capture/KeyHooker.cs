@@ -47,6 +47,17 @@ namespace PYO2016_Client.Sources.Capture
             UnhookWindowsHookEx(hhook);
         }
 
+        static private KeyHooker k = null;
+
+        private KeyHooker() { }
+
+        static public KeyHooker getInstance()
+        {
+            if (k == null)
+                k = new KeyHooker();
+            return k;
+        }
+
         //Hook process
         public static IntPtr hookProc(int code, IntPtr wParam, IntPtr lParam)
         {
@@ -88,7 +99,7 @@ namespace PYO2016_Client.Sources.Capture
                     if (shiftKeyState)
                         shiftKeyState = false;
                 }
-            }            
+            }
             return CallNextHookEx(hhook, code, (int)wParam, lParam);
         }
     }

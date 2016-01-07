@@ -42,8 +42,6 @@ namespace PYO2016_Client
             //hooker = new KeyHooker();
             //hookThread = new Thread(hooker.SetHook);
             //hookThread.Start();
-            hooker = new KeyHooker();
-            hooker.SetHook();
         }
         private void SetBalloonTip()
         {

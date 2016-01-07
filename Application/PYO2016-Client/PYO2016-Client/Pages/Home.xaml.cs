@@ -1,4 +1,5 @@
 ﻿using FirstFloor.ModernUI.Windows.Controls;
+using Newtonsoft.Json.Linq;
 using PYO2016_Client.Sources.HttpGetter;
 using PYO2016_Client.Sources.Model;
 using System;
@@ -44,26 +45,27 @@ namespace PYO2016_Client.Pages
             try
             {    
                 string result = HttpGetter.HttpPost("http://pyoserver.azurewebsites.net/api/Account/Login", paramName, param);
-                if (result.Equals(""))
-                {
-                    Attributes instance = Attributes.getInstance();
-                    instance.addLinkGroup(1);
+                JObject obj = JObject.Parse(result);
+                //JArray array = JArray.Parse(obj["pk"].ToString());
+                //string res = array[0].ToString();
+                string res = obj["pk"].ToString();
 
-                    BBCodeBlock bs = new BBCodeBlock();
-                    try
-                    {    
-                        bs.LinkNavigator.Navigate(new Uri("/Pages/Upload.xaml", UriKind.Relative), this);
-                    }
-                    catch (Exception error)
-                    {
-                        ModernDialog.ShowMessage(error.Message, FirstFloor.ModernUI.Resources.NavigationFailed, MessageBoxButton.OK);
-                    }
+                AccessTokenManager.getInstance().setToken(res);
+
+                Attributes instance = Attributes.getInstance();
+                instance.addLinkGroup(1);
+
+                BBCodeBlock bs = new BBCodeBlock();
+                try
+                {    
+                    bs.LinkNavigator.Navigate(new Uri("/Pages/Upload.xaml", UriKind.Relative), this);
                     instance.removeLinkGroup(0);
                 }
-                else
+                catch (Exception error)
                 {
-                    System.Windows.Forms.MessageBox.Show(result, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    ModernDialog.ShowMessage(error.Message, FirstFloor.ModernUI.Resources.NavigationFailed, MessageBoxButton.OK);
                 }
+                instance.removeLinkGroup(0);
             }
             catch (Exception error)
             {

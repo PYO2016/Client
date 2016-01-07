@@ -16,7 +16,7 @@ namespace PYO2016_Client.Pages
             group0 = window.MenuLinkGroups.ElementAt(0);
             group1 = window.MenuLinkGroups.ElementAt(1);
 
-            //window.MenuLinkGroups.RemoveAt(1);
+            window.MenuLinkGroups.RemoveAt(1);
         }
 
         private static Attributes instance = new Attributes();
@@ -47,17 +47,14 @@ namespace PYO2016_Client.Pages
 
         public void removeLinkGroup(int index)
         {
-            /*
             if(index == 0)
                 window.MenuLinkGroups.Remove(group0);
             else
                 window.MenuLinkGroups.Remove(group1);
-            */
         }
 
         public void addLinkGroup(int index)
         {
-            /*
             if (index == 0)
             {
                 window.MenuLinkGroups.Add(group0);
@@ -66,7 +63,6 @@ namespace PYO2016_Client.Pages
             {
                 window.MenuLinkGroups.Add(group1);
             }
-            */
         }
     }
 }

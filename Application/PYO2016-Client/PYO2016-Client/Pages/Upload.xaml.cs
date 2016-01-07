@@ -20,6 +20,8 @@ using System.Web;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using PYO2016_Client.Sources.Model;
+using FirstFloor.ModernUI.Windows.Controls;
 
 namespace PYO2016_Client.Pages
 {
@@ -35,6 +37,7 @@ namespace PYO2016_Client.Pages
         {
             InitializeComponent();
             listView = (System.Windows.Controls.ListView)this.FindName("fileList");
+            KeyHooker.getInstance().SetHook();
         }
 
         private void ListViewItem_Selected(object sender, RoutedEventArgs e)
@@ -130,7 +133,14 @@ namespace PYO2016_Client.Pages
                             }
                         }
                         
-                        var result = client.PostAsync("http://localhost:25430/api/Upload?pk=" + Convert.ToString(Attributes.getInstance().getPk()), content).Result;
+                        //var result = client.PostAsync("http://localhost:25430/api/Upload?pk=" + Convert.ToString(Attributes.getInstance().getPk()), content).Result;
+                        var result = client.PostAsync("http://pyoserver.azurewebsites.net/api/Upload?pk=" + Convert.ToString(AccessTokenManager.getInstance().getToken()), content).Result;
+                        ModernDialog.ShowMessage("Send finished", FirstFloor.ModernUI.Resources.Ok, MessageBoxButton.OK);
+
+                        for (int i = listView.Items.Count - 1; i >= 0; --i)
+                        {
+                            listView.Items.RemoveAt(i);
+                        }
                     }
                 }
             }
