@@ -30,6 +30,10 @@ namespace PYO2016_Client.Pages
     /// </summary>
     public partial class BasicPage1 : System.Windows.Controls.UserControl
     {
+        static private int ITEM_COUNT_MAX = 10;
+        static private string MAX_WARNING_TITLE = "Failed";
+        static private string MAX_WRANING_TEXT = "한 번에 분석 가능한 이미지는 최대 10개 입니다.";
+
         static private System.Windows.Controls.ListView listView;
         static private object thisLock = new object();
 
@@ -47,6 +51,12 @@ namespace PYO2016_Client.Pages
 
         static public void static_captureButton_Click()
         {
+            if (listView.Items.Count >= ITEM_COUNT_MAX)
+            {
+                ModernDialog.ShowMessage(MAX_WRANING_TEXT, MAX_WARNING_TITLE, MessageBoxButton.OK);
+                return;
+            }
+
             lock (thisLock)
             {
                 CaptureTool.getInstance().capture(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\pyo-capture");
@@ -63,6 +73,12 @@ namespace PYO2016_Client.Pages
 
         private void captureButton_Click_1(object sender, RoutedEventArgs e)
         {
+            if (listView.Items.Count >= ITEM_COUNT_MAX)
+            {
+                ModernDialog.ShowMessage(MAX_WRANING_TEXT, MAX_WARNING_TITLE, MessageBoxButton.OK);
+                return;
+            }
+
             lock (thisLock)
             {
                 CaptureTool.getInstance().capture(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\pyo-capture");
@@ -79,6 +95,12 @@ namespace PYO2016_Client.Pages
 
         private void fileAdd(object sender, RoutedEventArgs e)
         {
+            if (listView.Items.Count >= ITEM_COUNT_MAX)
+            {
+                ModernDialog.ShowMessage(MAX_WRANING_TEXT, MAX_WARNING_TITLE, MessageBoxButton.OK);
+                return;
+            }
+
             OpenFileDialog openImgFileDialog = new OpenFileDialog();
             openImgFileDialog.Filter = "Cursor Files|*.jpg;*.png;*.bmp";
             openImgFileDialog.Title = "Select a ImageFile";
@@ -95,6 +117,11 @@ namespace PYO2016_Client.Pages
 
         private void fileAddex(string filename)
         {
+            if (listView.Items.Count >= ITEM_COUNT_MAX)
+            {
+                return;
+            }
+
             listView.Items.Add(filename);
         }
 
