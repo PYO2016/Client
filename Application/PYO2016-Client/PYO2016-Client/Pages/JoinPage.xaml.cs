@@ -42,8 +42,8 @@ namespace PYO2016_Client.Pages
             }
             try
             {
-                string result = HttpGetter.HttpPost("http://pyoserver.azurewebsites.net/api/Account/Register", paramName, param);
-                //string result = HttpGetter.HttpPost("http://localhost:25430/api/Account/Register", paramName, param);
+                string result = HttpGetter.HttpPost("http://210.118.74.141:25430/api/Account/Register", paramName, param);
+                //string result = HttpGetter.HttpPost("http://210.118.74.141:25430/api/Account/Register", paramName, param);
                 if(result.Equals(""))
                 {
                     BBCodeBlock bs = new BBCodeBlock();

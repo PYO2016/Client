@@ -11,6 +11,27 @@ namespace PYO2016_Client.Sources.HttpGetter
 {
     class HttpGetter
     {
+        public static string HttpDelete(string url)
+        {
+            HttpWebRequest req = WebRequest.Create(url) as HttpWebRequest;
+            req.Method = "DELETE";
+            string result = null;
+            try
+            {
+
+                using (HttpWebResponse resp = req.GetResponse() as HttpWebResponse)
+                {
+                    StreamReader reader = new StreamReader(resp.GetResponseStream());
+                    result = reader.ReadToEnd();
+                }
+            }
+            catch
+            {
+                return "BAD";
+            }
+            return result;
+        }
+
         public static string HttpGet(string url)
         {
             HttpWebRequest req = WebRequest.Create(url) as HttpWebRequest;

@@ -44,10 +44,8 @@ namespace PYO2016_Client.Pages
 
             try
             {    
-                string result = HttpGetter.HttpPost("http://pyoserver.azurewebsites.net/api/Account/Login", paramName, param);
+                string result = HttpGetter.HttpPost("http://210.118.74.141:25430/api/Account/Login", paramName, param);
                 JObject obj = JObject.Parse(result);
-                //JArray array = JArray.Parse(obj["pk"].ToString());
-                //string res = array[0].ToString();
                 string res = obj["pk"].ToString();
 
                 AccessTokenManager.getInstance().setToken(res);

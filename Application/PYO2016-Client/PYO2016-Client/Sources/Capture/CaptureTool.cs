@@ -127,7 +127,6 @@ namespace PYO2016_Client.Sources.Capture
                                                                         Int32Rect.Empty,
                                                                         BitmapSizeOptions.FromEmptyOptions()
             );
-            printscreen.Save("C:\\git\\qwer.png");
             printscreen.Dispose();
             var brush = new ImageBrush(bitmapSource);
             return brush;
