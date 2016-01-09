@@ -10,7 +10,7 @@ namespace PYO2016_Client.Sources.Encode
 {
     class PyoEncoder
     {
-        public static String Encode(String path)
+        public static String EncodeAndSave(String path)
         {
             try
             {
@@ -21,15 +21,40 @@ namespace PYO2016_Client.Sources.Encode
 
                 String newPath = Path.ChangeExtension(path, "png");
 
+                PngBitmapEncoder encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(bitmap));
                 using (var stream = new FileStream(newPath, FileMode.Create))
                 {
-                    PngBitmapEncoder encoder = new PngBitmapEncoder();
-                    encoder.Frames.Add(BitmapFrame.Create(bitmap));
                     encoder.Save(stream);
                 }
                 return newPath;
             }
-            catch (Exception e)
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public static byte[] Encode(String path)
+        {
+            byte[] encoded;
+            try
+            {
+                BitmapImage bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri(path, UriKind.RelativeOrAbsolute);
+                bitmap.EndInit();
+
+                PngBitmapEncoder encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(bitmap));
+                using (var stream = new MemoryStream())
+                {
+                    encoder.Save(stream);
+                    encoded = stream.ToArray();
+                }
+                return encoded;
+            }
+            catch (Exception)
             {
                 return null;
             }

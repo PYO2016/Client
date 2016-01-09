@@ -22,6 +22,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using PYO2016_Client.Sources.Model;
 using FirstFloor.ModernUI.Windows.Controls;
+using PYO2016_Client.Sources.Encode;
 
 namespace PYO2016_Client.Pages
 {
@@ -147,10 +148,11 @@ namespace PYO2016_Client.Pages
                             FileInfo fileInfo = new FileInfo(listView.Items[i].ToString());
                             try
                             {
-                                var fileContent = new ByteArrayContent(File.ReadAllBytes(listView.Items[i].ToString()));//(System.IO.File.ReadAllBytes(fileName));
+                                //var fileContent = new ByteArrayContent(File.ReadAllBytes(listView.Items[i].ToString()));//(System.IO.File.ReadAllBytes(fileName));
+                                var fileContent = new ByteArrayContent(PyoEncoder.Encode(listView.Items[i].ToString()));
                                 fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
                                 {
-                                    FileName = fileInfo.Name.Substring(0, fileInfo.Name.IndexOf(fileInfo.Extension)) + DateTime.Now.ToString("__yyyyMMdd_HHmmss") + fileInfo.Extension
+                                    FileName = fileInfo.Name.Substring(0, fileInfo.Name.IndexOf(fileInfo.Extension)) + DateTime.Now.ToString("__yyyyMMdd_HHmmss") + "_" + i + ".png"
                                 };
                                 content.Add(fileContent);
                             }

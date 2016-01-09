@@ -188,10 +188,12 @@ namespace PYO2016_Client.Sources.Capture
                 var cI = new CroppedBitmap(image, new Int32Rect((int)x1, (int)y1, (int)x2, (int)y2));
 
                 this.path += "\\" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".png";
+
+                BitmapEncoder encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(cI));
+
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
-                    BitmapEncoder encoder = new PngBitmapEncoder();
-                    encoder.Frames.Add(BitmapFrame.Create(cI));
                     encoder.Save(fileStream);
                 }
             }
