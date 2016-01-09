@@ -11,9 +11,17 @@ namespace PYO2016_Client.Sources.HttpGetter
 {
     class HttpGetter
     {
+        //private static string URL = "http://210.118.74.141:25430/";
+        private static string URL = "http://210.118.74.179:25430/";
+
+        public static string getURL()
+        {
+            return URL;
+        }
+
         public static string HttpDelete(string url)
         {
-            HttpWebRequest req = WebRequest.Create(url) as HttpWebRequest;
+            HttpWebRequest req = WebRequest.Create(URL + url) as HttpWebRequest;
             req.Method = "DELETE";
             string result = null;
             try
@@ -34,7 +42,7 @@ namespace PYO2016_Client.Sources.HttpGetter
 
         public static string HttpGet(string url)
         {
-            HttpWebRequest req = WebRequest.Create(url) as HttpWebRequest;
+            HttpWebRequest req = WebRequest.Create(URL + url) as HttpWebRequest;
             string result = null;
             using (HttpWebResponse resp = req.GetResponse() as HttpWebResponse)
             {
@@ -46,7 +54,7 @@ namespace PYO2016_Client.Sources.HttpGetter
 
         public static string HttpPost(string url, string[] paramName, string[] paramVal)
         {
-            HttpWebRequest req = WebRequest.Create(new Uri(url)) as HttpWebRequest;
+            HttpWebRequest req = WebRequest.Create(new Uri(URL + url)) as HttpWebRequest;
             req.Method = "POST";
             req.ContentType = "application/json";
 
@@ -95,7 +103,7 @@ namespace PYO2016_Client.Sources.HttpGetter
 
         public static string HttpFileUpload(string url, string fileName, string contentType, int contentLength, Stream inputStream)
         {
-            HttpWebRequest req = WebRequest.Create(new Uri(url))
+            HttpWebRequest req = WebRequest.Create(new Uri(URL + url))
                                  as HttpWebRequest;
             req.Method = "POST";
             req.ContentType = "multipart/form-data";

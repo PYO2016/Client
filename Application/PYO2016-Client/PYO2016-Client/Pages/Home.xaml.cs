@@ -44,7 +44,7 @@ namespace PYO2016_Client.Pages
 
             try
             {    
-                string result = HttpGetter.HttpPost("http://210.118.74.141:25430/api/Account/Login", paramName, param);
+                string result = HttpGetter.HttpPost("api/Account/Login", paramName, param);
                 JObject obj = JObject.Parse(result);
                 string res = obj["pk"].ToString();
 

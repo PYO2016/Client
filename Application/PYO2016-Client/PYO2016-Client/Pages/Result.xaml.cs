@@ -64,7 +64,7 @@ namespace PYO2016_Client.Pages
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            string result = HttpGetter.HttpGet("http://210.118.74.141:25430/api/ParsedTables?pk=" + AccessTokenManager.getInstance().getToken());
+            string result = HttpGetter.HttpGet("api/ParsedTables?pk=" + AccessTokenManager.getInstance().getToken());
             JArray a = JArray.Parse(result);
             FileManager.getInstance().clear();
 
@@ -102,7 +102,7 @@ namespace PYO2016_Client.Pages
             if (item != null)
             {
                 string content = (string)item.Content;
-                string call = "http://210.118.74.141:25430/api/ParsedTables/" + FileManager.getInstance().getValue(content) + "?pk=" + AccessTokenManager.getInstance().getToken();
+                string call = "api/ParsedTables/" + FileManager.getInstance().getValue(content) + "?pk=" + AccessTokenManager.getInstance().getToken();
                 string result = HttpGetter.HttpGet(call);
 
                 JObject obj = JObject.Parse(result);
@@ -129,7 +129,7 @@ namespace PYO2016_Client.Pages
             for (int i = list.SelectedItems.Count - 1; i >= 0; --i)
             {
                 string content = (string)list.SelectedItems[i];
-                string call = "http://210.118.74.141:25430/api/ParsedTables/" + FileManager.getInstance().getValue(content) + "?pk=" + AccessTokenManager.getInstance().getToken();
+                string call = "api/ParsedTables/" + FileManager.getInstance().getValue(content) + "?pk=" + AccessTokenManager.getInstance().getToken();
                 string res = HttpGetter.HttpDelete(call);
                 if ( res == "BAD" )
                 {
@@ -140,7 +140,7 @@ namespace PYO2016_Client.Pages
                 FileManager.getInstance().removeValue(i);
             }
 
-            string result = HttpGetter.HttpGet("http://210.118.74.141:25430/api/ParsedTables?pk=" + AccessTokenManager.getInstance().getToken());
+            string result = HttpGetter.HttpGet("api/ParsedTables?pk=" + AccessTokenManager.getInstance().getToken());
             JArray a = JArray.Parse(result);
             FileManager.getInstance().clear();
 
