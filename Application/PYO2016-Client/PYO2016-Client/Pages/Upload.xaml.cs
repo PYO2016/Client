@@ -47,7 +47,6 @@ namespace PYO2016_Client.Pages
 
         private void ListViewItem_Selected(object sender, RoutedEventArgs e)
         {
-
         }
 
         static public void static_captureButton_Click()
@@ -128,9 +127,9 @@ namespace PYO2016_Client.Pages
 
         private void fileRemove(object sender, RoutedEventArgs e)
         {
-            for (int i = listView.SelectedItems.Count - 1; i >= 0; --i)
+            while(listView.SelectedItems.Count > 0)
             {
-                listView.Items.RemoveAt(i);
+                listView.Items.RemoveAt(listView.SelectedIndex);
             }
         }
 
@@ -166,7 +165,7 @@ namespace PYO2016_Client.Pages
                         var result = client.PostAsync(HttpGetter.getURL() + "api/Upload?pk=" + Convert.ToString(AccessTokenManager.getInstance().getToken()), content).Result;
                         
                         ModernDialog.ShowMessage("Send finished", FirstFloor.ModernUI.Resources.Ok, MessageBoxButton.OK);
-
+                        
                         for (int i = listView.Items.Count - 1; i >= 0; --i)
                         {
                             listView.Items.RemoveAt(i);
