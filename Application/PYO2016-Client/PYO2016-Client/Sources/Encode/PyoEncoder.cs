@@ -42,16 +42,19 @@ namespace PYO2016_Client.Sources.Encode
             {
                 BitmapImage bitmap = new BitmapImage();
                 bitmap.BeginInit();
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
                 bitmap.UriSource = new Uri(path, UriKind.RelativeOrAbsolute);
                 bitmap.EndInit();
 
-                PngBitmapEncoder encoder = new PngBitmapEncoder();
+                BitmapEncoder encoder = new PngBitmapEncoder();
                 encoder.Frames.Add(BitmapFrame.Create(bitmap));
+               
                 using (var stream = new MemoryStream())
                 {
                     encoder.Save(stream);
                     encoded = stream.ToArray();
                 }
+
                 return encoded;
             }
             catch (Exception)

@@ -165,6 +165,8 @@ namespace PYO2016_Client.Pages
                     }
                 }
             }
+
+            SetHtml(wb, @"");
         }
     }
 }
