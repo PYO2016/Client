@@ -6,29 +6,54 @@
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
              mc:Ignorable="d" 
              d:DesignHeight="480" d:DesignWidth="600">
-    <Grid Style="{StaticResource ContentRoot}">
+    <Grid Style="{StaticResource ContentRoot}" Margin="20">
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width=".1*" />
             <ColumnDefinition Width=".8*" />
             <ColumnDefinition Width=".1*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height=".1*" />
-            <RowDefinition Height=".6*" />
-            <RowDefinition Height=".3*" />
+            <RowDefinition />
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="1.5*" />
+            <RowDefinition Height="1.5*"/>
         </Grid.RowDefinitions>
-        <ScrollViewer>
+
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock x:Name="textBlock" Margin="0,0,0,0" Text="FILES"  FontSize="30" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+            <Grid Width="{Binding Width, ElementName=captureButton}" Height="{Binding Height, ElementName=captureButton}" Background="{Binding BorderBrush, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mui:ModernWindow}}}" Opacity="0.3" Margin="0" HorizontalAlignment="Right" Grid.Column="1" MinWidth="100" MinHeight="30" MaxWidth="150" MaxHeight="60" />
+            <Button x:Name="captureButton"  Content="CAPTURE" HorizontalAlignment="Right" Click="captureButton_Click_1" Grid.Column="1" Background="{x:Null}" BorderThickness="0" FontWeight="Bold" Margin="5"/>
+
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.Column="1" Background="{Binding BorderBrush, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mui:ModernWindow}}}" Opacity="0.05" Margin="10" />
+        <ScrollViewer Grid.Row="1" Grid.Column="1" Margin="10">
             <StackPanel MinWidth="200"/>
         </ScrollViewer>
-        <Grid Grid.Column="1" Margin="0,0,0,0" Grid.Row="0"  Grid.RowSpan="2">
-            <TextBlock x:Name="textBlock" Margin="0,0,0,0" Text="Files" VerticalAlignment="Top"  FontSize="30" Height="45"/>
-            <Button x:Name="captureButton"  Content="Capture" HorizontalAlignment="Right" Height="32" VerticalAlignment="Top" Width="94" Click="captureButton_Click_1" Margin="0,5,0,0"/>
-            <ListView x:Name="fileList" VerticalAlignment="Top" Grid.Row="0" Margin="0,45,0,0" Height="261"/>
+        <ListView x:Name="fileList" Grid.Row="1" Grid.Column="1" Background="{x:Null}" Margin="10"/>
+
+
+        <Grid Grid.Column="1" Grid.Row="2" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Width="{Binding Width, ElementName=addButton}" Height="{Binding Height, ElementName=addButton}" Background="{Binding BorderBrush, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mui:ModernWindow}}}" Opacity="0.3" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" MinWidth="150" MaxWidth="150" MaxHeight="50" MinHeight="24" />
+            <Button x:Name="addButton"  Content="ADD" HorizontalAlignment="Right" Click="fileAdd" Margin="0,0,10,0" VerticalAlignment="Bottom" MinWidth="150" MaxWidth="150" MaxHeight="50" Background="{x:Null}" BorderThickness="0"/>
+            <Grid Width="{Binding Width, ElementName=removeButton}" Height="{Binding Height, ElementName=removeButton}" Background="{Binding BorderBrush, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mui:ModernWindow}}}" Opacity="0.3" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" MinWidth="150" MaxWidth="150" MaxHeight="50" MinHeight="24" Grid.Column="1" />
+            <Button x:Name="removeButton"  Content="REMOVE" HorizontalAlignment="Left" Click="fileRemove" Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Bottom" MinWidth="150" MaxWidth="150" MaxHeight="50" Background="{x:Null}" BorderThickness="0"/>
         </Grid>
-        <Grid Grid.Column="1" Grid.Row="2">
-            <Button x:Name="addButton"  Content="Add" HorizontalAlignment="Center" Height="32" Margin="0,0,110,0" VerticalAlignment="Top" Width="94" Click="fileAdd"/>
-            <Button x:Name="removeButton"  Content="Remove" HorizontalAlignment="Center" Height="32" Margin="110,0,0,0" VerticalAlignment="Top" Width="94" Click="fileRemove"/>
-            <Button x:Name="analysisButton"  Content="Analysis" HorizontalAlignment="Center" Height="32" Margin="181,70,179,0" VerticalAlignment="Top" Width="94" Click="analysisButton_Click"/>
-        </Grid>
+
+        <Grid Width="{Binding Width, ElementName=analysisButton}" Height="{Binding Height, ElementName=analysisButton}" Background="{Binding BorderBrush, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mui:ModernWindow}}}" Opacity="0.3" Margin="0,10,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" MinWidth="150" MaxWidth="150" MaxHeight="60" MinHeight="30" Grid.Column="1" Grid.Row="3" />
+        <Button x:Name="analysisButton"  Content="ANALYSIS" HorizontalAlignment="Center" Click="analysisButton_Click" Grid.Column="1" Margin="0,10,0,0" VerticalAlignment="Top" MinWidth="150" MaxWidth="150" MaxHeight="60" Grid.Row="3" Background="{x:Null}" BorderThickness="0" MinHeight="30" FontWeight="Bold"/>
+
     </Grid>
 </UserControl>

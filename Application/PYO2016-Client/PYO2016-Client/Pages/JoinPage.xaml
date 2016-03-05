@@ -6,18 +6,38 @@
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid Style="{StaticResource ContentRoot}">
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-400,50,0" Text="PYO 2016" FontSize="90"/>
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-30,0,0">
-            <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Email" VerticalAlignment="Top"/>
-            <TextBox x:Name="idText" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Margin="0,21,0,0"/>
-            <TextBlock x:Name="textBlock1_Copy" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" Margin="0,49,0,0"/>
-            <PasswordBox x:Name="pwText" HorizontalAlignment="Left" Height="23"  VerticalAlignment="Top" Width="200" Margin="0,67,0,0"/>
-            <TextBlock x:Name="textBlock1_Copy1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Confirm Password" VerticalAlignment="Top" Margin="0,95,0,0"/>
-            <PasswordBox x:Name="confirmText" HorizontalAlignment="Left" Height="23" VerticalAlignment="Top" Width="200" Margin="0,116,0,0" />
+    <Grid Style="{StaticResource ContentRoot}" Margin="0" VerticalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Center" Text="PYO 2016" FontSize="90" VerticalAlignment="Center" Padding="0,10">
+            <TextBlock.Background>
+                <ImageBrush ImageSource="../Assets/pattern5.png" Opacity="0.3"/>
+            </TextBlock.Background>
+        </TextBlock>
+
+        <Grid Grid.Row="1" Margin="0,10" MinWidth="150" MaxWidth="250">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition/>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition/>
+                <RowDefinition Height="1.5*"/>
+            </Grid.RowDefinitions>
+            
+            <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="E-MAIL" VerticalAlignment="Bottom" Margin="0,10,0,0"/>
+            <TextBox x:Name="idText" TextWrapping="Wrap" Grid.Row="1" Margin="0,0,0,10"/>
+            <TextBlock x:Name="textBlock1_Copy" HorizontalAlignment="Left" TextWrapping="Wrap" Text="PASSWORD" Grid.Row="2" VerticalAlignment="Bottom" Margin="0,10,0,0"/>
+            <PasswordBox x:Name="pwText" Grid.Row="3" Margin="0,0,0,10"/>
+            <TextBlock x:Name="textBlock1_Copy1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="CONFIRM PASSWORD" Grid.Row="4" VerticalAlignment="Bottom" Margin="0,10,0,0"/>
+            <PasswordBox x:Name="confirmText" Grid.Row="5" Margin="0,0,0,10" />
         </Grid>
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,210,0,20">
-            <Button x:Name="JoinBtn" Content="Join" HorizontalAlignment="Center" VerticalAlignment="Center" Width="75" Click="JoinBtn_Click"/>
-        </Grid>
+
+        <Grid Grid.Row="2" Width="{Binding Width, ElementName=JoinBtn}" Height="{Binding Height, ElementName=JoinBtn}" Background="{Binding BorderBrush, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mui:ModernWindow}}}" Opacity="0.3" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" MinHeight="35"></Grid>
+        <Button x:Name="JoinBtn" Content="JOIN" HorizontalAlignment="Center" Width="75" Click="JoinBtn_Click" Grid.Row="2" Padding="0" Margin="10" VerticalAlignment="Center" MinHeight="35" BorderThickness="0" Background="{x:Null}" FontWeight="Bold"/>
     </Grid>
 </UserControl>
