@@ -13,7 +13,7 @@
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock x:Name="textBlock" Text="PYO 2016" FontSize="90" HorizontalAlignment="Center" Padding="0,10" VerticalAlignment="Center" Margin="0">
+        <TextBlock x:Name="textBlock" Text="PYO 2016" FontSize="90" HorizontalAlignment="Center" Padding="0,10" VerticalAlignment="Top" Margin="0,60,0,0">
             <TextBlock.Background>
                 <ImageBrush ImageSource="../Assets/pattern5.png" Opacity="0.3"/>
             </TextBlock.Background>
